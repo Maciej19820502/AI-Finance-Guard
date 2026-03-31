@@ -19,5 +19,4 @@ desktop.ini
 .vscode/
 .idea/
 
-# Wyniki pipeline (generowane, nie commitujemy)
-dane_output/*.csv
+# Wyniki pipeline — commitujemy zeby dashboard mial dane od razu
