@@ -278,6 +278,42 @@ with tab_objects[tab_idx["Executive"]]:
     risk["LostSales_6M"] = risk["LostSales_6M"].apply(lambda x: f"{x:,.0f}")
     st.dataframe(risk, use_container_width=True, hide_index=True)
 
+    # POBIERANIE PLIKOW WYNIKOWYCH
+    st.divider()
+    st.subheader("Pobierz pliki wynikowe")
+
+    dl_cols = st.columns(4)
+    dl_files = [
+        ("Forecast_Demand.csv", fc, "Prognozy popytu"),
+        ("Plan_Production.csv", pp, "Plan produkcji"),
+        ("AFG_ML_EVAL_BACKTEST.csv", bt, "Backtest"),
+        ("AFG_ML_METRICS.csv", mt, "Metryki"),
+    ]
+    for col_dl, (fname, df_dl, label) in zip(dl_cols, dl_files):
+        with col_dl:
+            if df_dl is not None:
+                csv_data = df_dl.to_csv(index=False).encode("utf-8-sig")
+                st.download_button(
+                    label=f"{label}",
+                    data=csv_data,
+                    file_name=fname,
+                    mime="text/csv",
+                    use_container_width=True,
+                )
+            else:
+                st.button(f"{label}", disabled=True, use_container_width=True)
+
+    # Model comparison file
+    comp_dl_path = OUTPUT_DIR / "AFG_ML_MODEL_COMPARISON.csv"
+    if comp_dl_path.exists():
+        comp_data = comp_dl_path.read_bytes()
+        st.download_button(
+            label="Porownanie modeli (CSV)",
+            data=comp_data,
+            file_name="AFG_ML_MODEL_COMPARISON.csv",
+            mime="text/csv",
+        )
+
     # LEGENDA
     st.divider()
     with st.expander("LEGENDA", expanded=False):
