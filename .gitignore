@@ -1,0 +1,23 @@
+# Claude Code local config
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# CatBoost artifacts
+catboost_info/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Wyniki pipeline (generowane, nie commitujemy)
+dane_output/*.csv
